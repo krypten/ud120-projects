@@ -45,10 +45,9 @@ clf = tree.DecisionTreeClassifier().fit(features_train, labels_train)
 
 pred = clf.predict(features_test)
 x = clf.feature_importances_
-for num in x:
-    if x.any() > 0.2:
-        print x
-
+print numpy.where(x == max(x))
+print x[14343]
+print vectorizer.get_feature_names()[14343]
 # print (clf.feature_importances_)
 
 from sklearn.metrics import accuracy_score
