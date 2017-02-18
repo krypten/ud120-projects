@@ -21,7 +21,7 @@ dictionary = pickle.load( open("../final_project/final_project_dataset_modified.
 
 ### list the features you want to look at--first item in the 
 ### list will be the "target" feature
-features_list = ["bonus", "salary"]
+features_list = ["bonus", "long_term_investment"]
 data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
 target, features = targetFeatureSplit( data )
 
@@ -41,9 +41,13 @@ test_color = "b"
 
 
 
+from sklearn import linear_model
 
+reg = linear_model.LinearRegression().fit(feature_train, target_train)
+print(reg.coef_)
+print (reg.intercept_)
 
-
+print(reg.score(feature_test, target_test))
 
 ### draw the scatterplot, with color-coded training and testing points
 import matplotlib.pyplot as plt

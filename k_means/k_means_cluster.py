@@ -5,8 +5,6 @@
 """
 
 
-
-
 import pickle
 import numpy
 import matplotlib.pyplot as plt
@@ -49,24 +47,40 @@ data_dict.pop("TOTAL", 0)
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, "total_payments"]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
+print (finance_features[2])
+# print min(finance_features["exercised_stock_options"])
+
+print (min(finance_features[0]))
+print (max(finance_features[0]))
+print (min(finance_features[1]))
+print (max(finance_features[1]))
+
+finance_features[0] = [float(i - min(finance_features[0]))/float(max(finance_features[0]) - min(finance_features[0])) for i in finance_features[0]]
+finance_features[1] = [float(i - min(finance_features[1]))/float(max(finance_features[1]) - min(finance_features[1])) for i in finance_features[1]]
 
 ### in the "clustering with 3 features" part of the mini-project,
 ### you'll want to change this line to 
-### for f1, f2, _ in finance_features:
+c = []
+for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2 in finance_features:
+### for f1, f2 in finance_features:
     plt.scatter( f1, f2 )
+    if (f1 != 0):
+        c.append(f1)
 plt.show()
+print (max(c))
+print min(c)
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
 
+from sklearn.cluster import KMeans
 
-
+pred = KMeans(n_clusters=2, random_state=0).fit_predict(finance_features)
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
